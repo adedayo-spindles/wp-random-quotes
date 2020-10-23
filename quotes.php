@@ -5,11 +5,11 @@
  
 /*
 Plugin Name: Random Post Quotes
-Plugin URI: http://wordpress.org/plugins/learndash-social/
+Plugin URI: https://github.com/adedayo-spindles/wp-random-quotes/
 Description: Display random quotes on blog posts
 Author: Adedayo Agboola
 Version: 1.0
-Author URI: http://github.com/adedayospindles
+Author URI: https://github.com/adedayo-spindles/
 */
 
 function adedayo_get_quotes() {
@@ -44,17 +44,18 @@ Dolly, never go away
 Promise, you'll never go away
 Dolly'll never go away again";
 
-	// Here we split it into lines.
+	// split quotes into array of quotes using the new line.
 	$quotes = explode( "\n", $quotes );
 
-	// And then randomly choose a line.
+	// And then randomly choose a quote from the quotes.
 	return wptexturize( $quotes[ mt_rand( 0, count( $quotes ) - 1 ) ] );
 }
 
-// This just echoes the chosen line
-function get_quotes($postContent) {
+	// Get the chosen quote and display with the post content
+	function get_quotes($postContent) {
 	$chosenQuotes = adedayo_get_quotes();
 	
+	// Display on a single post
 	if ( is_singular( 'post' ) ) {
 		
 		return $postContent . "<p id='quotes'><span class='quotes-text'> $chosenQuotes </span></p>";
@@ -64,10 +65,9 @@ function get_quotes($postContent) {
 
 }
 
-
 add_filter( 'the_content', 'get_quotes' );
 
-// We need some CSS to position the paragraph.
+// CSS for the quotes
 function quote_css() {
 	echo "
 	<style type='text/css'>
@@ -98,4 +98,3 @@ function quote_css() {
 }
 
 add_action( 'wp_footer', 'quote_css' );
-
